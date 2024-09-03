@@ -28,8 +28,10 @@ const Input = styled.input`
   border: none;
   width: 100%;
   font-size: 16px;
+
   &[type="submit"] {
     cursor: pointer;
+
     &:hover {
       opacity: 0.8;
     }
@@ -61,10 +63,18 @@ export default function CreateAccount() {
   };
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (isLoading || name === "" || email === "" || password === "") return;
+
     try {
       // create an account
       // set the name of the user.
       // redirect to the home page
+      const credentials = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password,
+      );
+      console.log(credentials.user);
     } catch (e) {
       // setError
     } finally {
@@ -73,7 +83,7 @@ export default function CreateAccount() {
   };
   return (
     <Wrapper>
-      <Title>Log into 𝕏</Title>
+      <Title>Join into 𝕏</Title>
       <Form onSubmit={onSubmit}>
         <Input
           onChange={onChange}
