@@ -2,12 +2,12 @@ import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyANd4yZT54bSK0AcbItj1bqB7q5x78fOT0",
-  authDomain: "nwitter-reloaded.firebaseapp.com",
-  projectId: "nwitter-reloaded",
-  storageBucket: "nwitter-reloaded.appspot.com",
-  messagingSenderId: "597055701730",
-  appId: "1:597055701730:web:ad1f4784fbb491e2a614bb",
+  apiKey: "AIzaSyDQ4fSDx78mvRZ3SxVEJ63BPC1NRAlWQIU",
+  authDomain: "nwitter-reloaded-e02a7.firebaseapp.com",
+  projectId: "nwitter-reloaded-e02a7",
+  storageBucket: "nwitter-reloaded-e02a7.appspot.com",
+  messagingSenderId: "259222189347",
+  appId: "1:259222189347:web:bca534582f837ffcbc4896",
 };
 
 const app = initializeApp(firebaseConfig);
