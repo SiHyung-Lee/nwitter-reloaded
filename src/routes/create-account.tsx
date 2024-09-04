@@ -10,7 +10,7 @@ const Wrapper = styled.div`
   flex-direction: column;
   align-items: center;
   width: 420px;
-  padding: 50px 0px;
+  padding: 50px 0;
 `;
 
 const Title = styled.h1`
@@ -71,7 +71,7 @@ export default function CreateAccount() {
       const credentials = await createUserWithEmailAndPassword(
         auth,
         email,
-        password
+        password,
       );
       console.log(credentials.user);
       await updateProfile(credentials.user, {
@@ -80,6 +80,7 @@ export default function CreateAccount() {
       navigate("/");
     } catch (e) {
       // setError
+      setError("error");
     } finally {
       setLoading(false);
     }
