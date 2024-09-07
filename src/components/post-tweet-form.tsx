@@ -1,5 +1,7 @@
 import { styled } from "styled-components";
 import { useState } from "react";
+import { collection, addDoc } from "firebase/firestore";
+import { auth, db } from "../firebase";
 
 const Form = styled.form`
   display: flex;
@@ -28,9 +30,11 @@ const TextArea = styled.textarea`
     "Open Sans",
     "Helvetica Neue",
     sans-serif;
+
   &::placeholder {
     font-size: 16px;
   }
+
   &:focus {
     outline: none;
     border-color: #1d9bf0;
@@ -60,6 +64,7 @@ const SubmitBtn = styled.input`
   border-radius: 20px;
   font-size: 16px;
   cursor: pointer;
+
   &:hover,
   &:active {
     opacity: 0.9;
@@ -80,20 +85,27 @@ export default function PostTweetForm() {
       setFile(files[0]);
     }
   };
-
-  /*const onSubmit = async (e) => {
+  const onSubmit = async (e: React.FormEvent<HTMLInputElement>) => {
     e.preventDefault();
+    const user = auth.currentUser;
+    if (!user || isLoading || tweet === "" || tweet.length > 180) return;
     try {
       setLoading(true);
-    } catch (error) {
-      setError(error);
+      await addDoc(collection(db, "tweets"), {
+        tweet,
+        createdAt: Date.now(),
+        username: user.displayName || "Anonymous",
+        userId: user.uid,
+      });
+    } catch (e) {
+      console.log(e);
     } finally {
       setLoading(false);
     }
-  };*/
+  };
 
   return (
-    <Form>
+    <Form onSubmit={onSubmit}>
       <TextArea
         rows={5}
         maxLength={180}
@@ -112,7 +124,6 @@ export default function PostTweetForm() {
       />
       <SubmitBtn
         type="submit"
-        // onSubmit={onSubmit}
         value={isLoading ? "Posting..." : "Post Tweet"}
       />
     </Form>
