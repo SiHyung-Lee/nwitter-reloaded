@@ -1,7 +1,8 @@
 import { styled } from "styled-components";
 import { useState } from "react";
-import { collection, addDoc } from "firebase/firestore";
-import { auth, db } from "../firebase";
+import { collection, addDoc, updateDoc } from "firebase/firestore";
+import { auth, db, storage } from "../firebase";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 const Form = styled.form`
   display: flex;
@@ -91,12 +92,22 @@ export default function PostTweetForm() {
     if (!user || isLoading || tweet === "" || tweet.length > 180) return;
     try {
       setLoading(true);
-      await addDoc(collection(db, "tweets"), {
+      const doc = await addDoc(collection(db, "tweets"), {
         tweet,
         createdAt: Date.now(),
         username: user.displayName || "Anonymous",
         userId: user.uid,
       });
+      if (file) {
+        const locationRef = ref(
+          storage,
+          `tweets/${user.uid}-${user.displayName}/${doc.id}`,
+        );
+        const result = await uploadBytes(locationRef, file);
+        const url = await getDownloadURL(result.ref);
+        console.log(url);
+        await updateDoc(doc, { photo: url });
+      }
     } catch (e) {
       console.log(e);
     } finally {
@@ -112,6 +123,7 @@ export default function PostTweetForm() {
         onChange={onChange}
         value={tweet}
         placeholder="What is happening?"
+        required
       />
       <AttachFileButton htmlFor="file">
         {file ? "Photo added ✅" : "Add photo"}
