@@ -76,8 +76,7 @@ export default function PostTweetForm() {
   const [isLoading, setLoading] = useState(false);
   const [tweet, setTweet] = useState("");
   const [file, setFile] = useState<File | null>(null);
-  // const [error, setError] = useState("");
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setTweet(e.target.value);
   };
   const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -86,7 +85,7 @@ export default function PostTweetForm() {
       setFile(files[0]);
     }
   };
-  const onSubmit = async (e: React.FormEvent<HTMLInputElement>) => {
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const user = auth.currentUser;
     if (!user || isLoading || tweet === "" || tweet.length > 180) return;
