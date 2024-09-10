@@ -48,7 +48,7 @@ export default function Timeline() {
         id: doc.id,
       };
     });*/
-      const unsubscribe = onSnapshot(tweetsQuery, (snapshot) => {
+      unsubscribe = onSnapshot(tweetsQuery, (snapshot) => {
         const tweets = snapshot.docs.map((doc) => {
           const { tweet, createdAt, userId, username, photo } = doc.data();
           return {
