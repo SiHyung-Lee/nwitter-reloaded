@@ -4,6 +4,7 @@ import {
   orderBy,
   query,
   onSnapshot,
+  limit,
 } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { styled } from "styled-components";
@@ -35,6 +36,7 @@ export default function Timeline() {
       const tweetsQuery = query(
         collection(db, "tweets"),
         orderBy("createdAt", "desc"),
+        limit(3),
       );
       /*const snapshot = await getDocs(tweetsQuery);
     const tweets = snapshot.docs.map((doc) => {
