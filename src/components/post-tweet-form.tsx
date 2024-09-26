@@ -41,7 +41,7 @@ const TextArea = styled.textarea`
 `;
 
 const AttachFileButton = styled.label`
-  padding: 10px 0px;
+  padding: 10px 0;
   color: #1d9bf0;
   text-align: center;
   border-radius: 20px;
@@ -59,7 +59,7 @@ const SubmitBtn = styled.input`
   background-color: #1d9bf0;
   color: white;
   border: none;
-  padding: 10px 0px;
+  padding: 10px 0;
   border-radius: 20px;
   font-size: 16px;
   cursor: pointer;
